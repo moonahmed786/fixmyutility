@@ -18,13 +18,15 @@ class InquiryResource extends Resource
 
     protected static ?string $navigationLabel = 'Leads / Inquiries';
 
+    protected static string|\UnitEnum|null $navigationGroup = 'CRM';
+
     protected static ?string $pluralLabel = 'Inquiries';
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
-                Forms\Components\Card::make()
+                Forms\Components\Section::make()
                     ->schema([
                         Forms\Components\TextInput::make('name')
                             ->required()
@@ -40,19 +42,20 @@ class InquiryResource extends Resource
                             ->maxLength(255),
                         Forms\Components\Select::make('status')
                             ->options([
-                                'new' => 'New',
+                                'new'         => 'New',
                                 'in_progress' => 'In Progress',
-                                'responded' => 'Responded',
-                                'closed' => 'Closed',
+                                'responded'   => 'Responded',
+                                'closed'      => 'Closed',
                             ])
                             ->required()
                             ->default('new'),
+                        Forms\Components\TextInput::make('service_slug')
+                            ->label('Source Service')
+                            ->disabled()
+                            ->maxLength(255),
                         Forms\Components\Textarea::make('message')
                             ->required()
                             ->columnSpanFull(),
-                        Forms\Components\TextInput::make('service_slug')
-                            ->disabled()
-                            ->maxLength(255),
                     ])->columns(2),
             ]);
     }
@@ -60,23 +63,29 @@ class InquiryResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
+            ->defaultSort('created_at', 'desc')
             ->columns([
                 Tables\Columns\TextColumn::make('name')
-                    ->searchable(),
+                    ->searchable()
+                    ->sortable(),
                 Tables\Columns\TextColumn::make('email')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('phone')
-                    ->searchable(),
-                Tables\Columns\BadgeColumn::make('status')
-                    ->colors([
-                        'danger' => 'new',
-                        'warning' => 'in_progress',
-                        'success' => 'closed',
-                        'primary' => 'responded',
-                    ]),
+                    ->searchable()
+                    ->toggleable(),
+                Tables\Columns\TextColumn::make('status')
+                    ->badge()
+                    ->color(fn (string $state): string => match ($state) {
+                        'new'         => 'danger',
+                        'in_progress' => 'warning',
+                        'responded'   => 'primary',
+                        'closed'      => 'success',
+                        default       => 'gray',
+                    }),
                 Tables\Columns\TextColumn::make('service_slug')
                     ->label('Source Service')
-                    ->searchable(),
+                    ->searchable()
+                    ->toggleable(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
@@ -85,10 +94,10 @@ class InquiryResource extends Resource
             ->filters([
                 Tables\Filters\SelectFilter::make('status')
                     ->options([
-                        'new' => 'New',
+                        'new'         => 'New',
                         'in_progress' => 'In Progress',
-                        'responded' => 'Responded',
-                        'closed' => 'Closed',
+                        'responded'   => 'Responded',
+                        'closed'      => 'Closed',
                     ]),
             ])
             ->actions([
