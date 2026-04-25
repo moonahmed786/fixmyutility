@@ -4,9 +4,14 @@ namespace App\Filament\Resources\Inquiries;
 
 use App\Filament\Resources\Inquiries\Pages;
 use App\Models\Inquiry;
-use Filament\Forms;
-use Filament\Forms\Form;
+use BackedEnum;
 use Filament\Resources\Resource;
+use Filament\Schemas\Schema;
+use Filament\Forms\Components\Section;
+use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\Textarea;
+use Filament\Forms\Components\Select;
+use Filament\Support\Icons\Heroicon;
 use Filament\Tables;
 use Filament\Tables\Table;
 
@@ -14,33 +19,31 @@ class InquiryResource extends Resource
 {
     protected static ?string $model = Inquiry::class;
 
-    protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-chat-bubble-left-right';
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedChatBubbleLeftRight;
 
     protected static ?string $navigationLabel = 'Leads / Inquiries';
 
-    protected static string|\UnitEnum|null $navigationGroup = 'CRM';
-
     protected static ?string $pluralLabel = 'Inquiries';
 
-    public static function form(Form $form): Form
+    public static function form(Schema $schema): Schema
     {
-        return $form
-            ->schema([
-                Forms\Components\Section::make()
+        return $schema
+            ->components([
+                Section::make()
                     ->schema([
-                        Forms\Components\TextInput::make('name')
+                        TextInput::make('name')
                             ->required()
                             ->maxLength(255),
-                        Forms\Components\TextInput::make('email')
+                        TextInput::make('email')
                             ->email()
                             ->required()
                             ->maxLength(255),
-                        Forms\Components\TextInput::make('phone')
+                        TextInput::make('phone')
                             ->tel()
                             ->maxLength(255),
-                        Forms\Components\TextInput::make('subject')
+                        TextInput::make('subject')
                             ->maxLength(255),
-                        Forms\Components\Select::make('status')
+                        Select::make('status')
                             ->options([
                                 'new'         => 'New',
                                 'in_progress' => 'In Progress',
@@ -49,11 +52,11 @@ class InquiryResource extends Resource
                             ])
                             ->required()
                             ->default('new'),
-                        Forms\Components\TextInput::make('service_slug')
+                        TextInput::make('service_slug')
                             ->label('Source Service')
                             ->disabled()
                             ->maxLength(255),
-                        Forms\Components\Textarea::make('message')
+                        Textarea::make('message')
                             ->required()
                             ->columnSpanFull(),
                     ])->columns(2),
