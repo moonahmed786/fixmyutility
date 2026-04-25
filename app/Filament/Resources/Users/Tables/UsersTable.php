@@ -19,6 +19,15 @@ class UsersTable
                 TextColumn::make('email')
                     ->label('Email address')
                     ->searchable(),
+                TextColumn::make('roles.name')
+                    ->badge()
+                    ->color(fn(string $state): string => match ($state) {
+                        'admin' => 'danger',
+                        'editor' => 'warning',
+                        'customer' => 'success',
+                        default => 'gray',
+                    })
+                    ->searchable(),
                 TextColumn::make('country')
                     ->searchable(),
                 TextColumn::make('phone')

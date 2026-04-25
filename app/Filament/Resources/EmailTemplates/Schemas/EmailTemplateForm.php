@@ -18,10 +18,11 @@ class EmailTemplateForm
                     ->required(),
                 TextInput::make('subject')
                     ->required(),
-                Textarea::make('body')
+                \Filament\Forms\Components\RichEditor::make('body')
                     ->required()
                     ->columnSpanFull(),
-                TextInput::make('variables'),
+                \Filament\Forms\Components\TagsInput::make('variables')
+                    ->placeholder('Add a variable (e.g. {{name}}) and press Enter'),
             ]);
     }
 }

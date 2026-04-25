@@ -34,7 +34,9 @@ class PlanForm
                 TextInput::make('stripe_price_id_usd'),
                 TextInput::make('stripe_price_id_gbp'),
                 TextInput::make('stripe_price_id_cad'),
-                TextInput::make('features'),
+                \Filament\Forms\Components\TagsInput::make('features')
+                    ->placeholder('Add a feature and press Enter')
+                    ->required(),
                 TextInput::make('bill_limit')
                     ->numeric(),
                 Toggle::make('is_active')

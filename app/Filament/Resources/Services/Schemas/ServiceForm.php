@@ -14,12 +14,16 @@ class ServiceForm
         return $schema
             ->components([
                 TextInput::make('title')
-                    ->required(),
+                    ->required()
+                    ->live(onBlur: true)
+                    ->afterStateUpdated(fn ($state, callable $set) => $set('slug', \Illuminate\Support\Str::slug($state))),
                 TextInput::make('slug')
-                    ->required(),
+                    ->required()
+                    ->unique(ignoreRecord: true),
                 Textarea::make('excerpt')
                     ->columnSpanFull(),
-                Textarea::make('content')
+                \Filament\Forms\Components\RichEditor::make('content')
+                    ->required()
                     ->columnSpanFull(),
                 TextInput::make('icon'),
                 TextInput::make('order')

@@ -30,14 +30,15 @@ class PageController extends Controller
         $validated = $request->validate([
             'name'    => 'required|string|max:100',
             'email'   => 'required|email|max:150',
+            'phone'   => 'required|string|max:20',
             'subject' => 'nullable|string|max:200',
             'message' => 'required|string|min:10|max:2000',
+            'service_slug' => 'nullable|string|exists:services,slug',
         ]);
 
-        // Log or queue a mail – for now just flash success
-        \Illuminate\Support\Facades\Log::info('Contact form submission', $validated);
+        \App\Models\Inquiry::create($validated);
 
-        return back()->with('success', 'Thank you! We will get back to you within 24 hours.');
+        return back()->with('success', 'Thank you! We have received your inquiry and will get back to you shortly.');
     }
 
     public function pricing()

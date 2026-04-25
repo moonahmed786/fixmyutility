@@ -42,6 +42,13 @@
                             </div>
                         </div>
                         <div>
+                            <label class="form-label">Phone Number</label>
+                            <input type="tel" name="phone" value="{{ old('phone') }}"
+                                   class="form-input @error('phone') border-red-400 @enderror"
+                                   placeholder="+1 (555) 000-0000" required>
+                            @error('phone') <p class="text-red-500 text-xs mt-1">{{ $message }}</p> @enderror
+                        </div>
+                        <div>
                             <label class="form-label">Subject <span class="text-dark/40 font-normal">(optional)</span></label>
                             <input type="text" name="subject" value="{{ old('subject') }}"
                                    class="form-input"

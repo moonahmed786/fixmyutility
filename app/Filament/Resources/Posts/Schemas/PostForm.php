@@ -15,21 +15,29 @@ class PostForm
     {
         return $schema
             ->components([
-                TextInput::make('post_category_id')
-                    ->numeric(),
+                \Filament\Forms\Components\Select::make('post_category_id')
+                    ->relationship('category', 'name')
+                    ->required(),
                 TextInput::make('title')
-                    ->required(),
+                    ->required()
+                    ->live(onBlur: true)
+                    ->afterStateUpdated(fn ($state, callable $set) => $set('slug', \Illuminate\Support\Str::slug($state))),
                 TextInput::make('slug')
-                    ->required(),
+                    ->required()
+                    ->unique(ignoreRecord: true),
                 Textarea::make('excerpt')
                     ->columnSpanFull(),
-                Textarea::make('content')
+                \Filament\Forms\Components\RichEditor::make('content')
+                    ->required()
                     ->columnSpanFull(),
                 FileUpload::make('featured_image')
-                    ->image(),
+                    ->image()
+                    ->directory('blog'),
                 Toggle::make('is_active')
+                    ->default(true)
                     ->required(),
-                DateTimePicker::make('published_at'),
+                DateTimePicker::make('published_at')
+                    ->default(now()),
             ]);
     }
 }
