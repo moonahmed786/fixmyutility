@@ -57,6 +57,14 @@ Generates dispute letters and analysis reports as PDFs.
 5. DomPDF generates report PDF
 6. Email sent to customer via Laravel Mail
 
+## Module Implementation
+- [ ] **User Management (RBAC)**: Admin, Editor, Customer roles using `spatie/laravel-permission`.
+- [ ] **Blog Writing Module**: Filament-based backend for posts and categories.
+- [ ] **Pricing & Packages**: Management of plans and features in Filament.
+- [ ] **Services Management**: Full CRUD for utility services in admin panel.
+- [ ] **Email Templates**: Dynamic template builder and application-wide integration.
+- [ ] **Leads Management**: Contact form on each service page with phone/email capture.
+
 ## Code Style
 - Use Laravel best practices: Services, Actions, Form Requests
 - Models in app/Models, Services in app/Services

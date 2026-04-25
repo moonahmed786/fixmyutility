@@ -3,52 +3,34 @@
 namespace App\Livewire;
 
 use App\Models\Bill;
+use App\Models\Dispute;
 use Livewire\Component;
-use Livewire\WithFileUploads;
 
 class Dashboard extends Component
 {
-    use WithFileUploads;
-
-    public $showUploadModal = false;
-    public $billFile;
-    public $utilityType = 'electricity';
-    public $currency = 'USD';
-
     public function render()
     {
-        $bills = Bill::where('user_id', auth()->id())
-            ->orderBy('created_at', 'desc')
+        $userId = auth()->id();
+
+        $totalBills     = Bill::where('user_id', $userId)->count();
+        $analyzedBills  = Bill::where('user_id', $userId)->where('status', 'analyzed')->count();
+        $totalSavings   = Bill::where('user_id', $userId)
+            ->whereHas('analysis', fn ($q) => $q->where('status', 'completed'))
+            ->with('analysis')
+            ->get()
+            ->sum(fn ($b) => $b->analysis?->overcharge_amount ?? 0);
+        $activeDisputes = Dispute::where('user_id', $userId)
+            ->whereIn('status', ['draft', 'sent', 'in_review'])
+            ->count();
+
+        $recentBills = Bill::where('user_id', $userId)
+            ->with('analysis')
+            ->orderByDesc('created_at')
+            ->take(5)
             ->get();
 
-        return view('livewire.dashboard', [
-            'bills' => $bills,
-        ])->layout('layouts.app');
-    }
-
-    public function uploadBill()
-    {
-        $this->validate([
-            'billFile' => 'required|mimes:pdf,jpg,png|max:10240',
-            'utilityType' => 'required',
-            'currency' => 'required',
-        ]);
-
-        $bill = Bill::create([
-            'user_id' => auth()->id(),
-            'utility_type' => $this->utilityType,
-            'currency' => $this->currency,
-            'status' => 'uploaded',
-        ]);
-
-        $bill->addMedia($this->billFile->getRealPath())
-            ->toMediaCollection('bill');
-
-        \App\Jobs\AnalyzeBillJob::dispatch($bill);
-
-        $this->showUploadModal = false;
-        $this->billFile = null;
-
-        session()->flash('message', 'Bill uploaded successfully! Analysis will start shortly.');
+        return view('livewire.dashboard', compact(
+            'totalBills', 'analyzedBills', 'totalSavings', 'activeDisputes', 'recentBills'
+        ))->layout('layouts.dashboard', ['pageTitle' => 'Overview']);
     }
 }

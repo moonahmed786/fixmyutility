@@ -1,29 +1,31 @@
-<x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Profile') }}
-        </h2>
-    </x-slot>
+@extends('layouts.dashboard')
 
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
-            <div class="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
-                <div class="max-w-xl">
-                    <livewire:profile.update-profile-information-form />
-                </div>
-            </div>
+@section('pageTitle', 'Profile Settings')
 
-            <div class="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
-                <div class="max-w-xl">
-                    <livewire:profile.update-password-form />
-                </div>
-            </div>
+@section('content')
+<div class="max-w-3xl mx-auto space-y-8">
 
-            <div class="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
-                <div class="max-w-xl">
-                    <livewire:profile.delete-user-form />
-                </div>
-            </div>
-        </div>
+    <p class="text-dark/50 text-sm -mt-2">Manage your account information and security.</p>
+
+    {{-- Update Profile Info --}}
+    <div class="card p-8">
+        <h2 class="font-heading text-lg font-bold text-dark mb-1">Profile Information</h2>
+        <p class="text-sm text-dark/50 mb-6">Update your name and email address.</p>
+        <livewire:profile.update-profile-information-form />
     </div>
-</x-app-layout>
+
+    {{-- Update Password --}}
+    <div class="card p-8">
+        <h2 class="font-heading text-lg font-bold text-dark mb-1">Update Password</h2>
+        <p class="text-sm text-dark/50 mb-6">Use a long, random password to stay secure.</p>
+        <livewire:profile.update-password-form />
+    </div>
+
+    {{-- Delete Account --}}
+    <div class="card p-8">
+        <h2 class="font-heading text-lg font-bold text-dark mb-1">Delete Account</h2>
+        <p class="text-sm text-dark/50 mb-6">Permanently delete your account and all associated data.</p>
+        <livewire:profile.delete-user-form />
+    </div>
+</div>
+@endsection
