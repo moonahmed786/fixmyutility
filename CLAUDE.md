@@ -58,12 +58,12 @@ Generates dispute letters and analysis reports as PDFs.
 6. Email sent to customer via Laravel Mail
 
 ## Module Implementation
-- [ ] **User Management (RBAC)**: Admin, Editor, Customer roles using `spatie/laravel-permission`.
-- [ ] **Blog Writing Module**: Filament-based backend for posts and categories.
-- [ ] **Pricing & Packages**: Management of plans and features in Filament.
-- [ ] **Services Management**: Full CRUD for utility services in admin panel.
-- [ ] **Email Templates**: Dynamic template builder and application-wide integration.
-- [ ] **Leads Management**: Contact form on each service page with phone/email capture.
+- [x] **User Management (RBAC)**: Admin, Editor, Customer roles using `spatie/laravel-permission`.
+- [x] **Blog Writing Module**: Filament-based backend for posts and categories.
+- [x] **Pricing & Packages**: Management of plans and features in Filament.
+- [x] **Services Management**: Full CRUD for utility services in admin panel.
+- [x] **Email Templates**: Dynamic template builder and application-wide integration.
+- [x] **Leads Management**: Contact form on each service page with phone/email capture.
 
 ## Code Style
 - Use Laravel best practices: Services, Actions, Form Requests
