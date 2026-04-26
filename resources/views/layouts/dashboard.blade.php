@@ -23,10 +23,16 @@
            :class="sidebarOpen ? 'translate-x-0' : '-translate-x-full'">
 
         {{-- Logo --}}
-        <div class="h-20 flex items-center px-8 border-b border-white/10 shrink-0">
+        <div class="h-20 flex items-center justify-between px-6 border-b border-white/10 shrink-0">
             <a href="{{ route('home') }}" class="text-xl font-heading font-extrabold tracking-tight">
                 FixMy<span class="text-accent">Utility</span>
             </a>
+            <button @click="sidebarOpen = false"
+                    class="lg:hidden text-white/40 hover:text-white transition p-1 rounded-lg hover:bg-white/10">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                </svg>
+            </button>
         </div>
 
         {{-- Navigation --}}
@@ -129,7 +135,7 @@
         <header class="h-16 bg-white border-b border-secondary/10 flex items-center justify-between px-6 lg:px-8 shrink-0 sticky top-0 z-30">
             <div class="flex items-center gap-4">
                 {{-- Mobile hamburger --}}
-                <button @click="sidebarOpen = true"
+                <button @click="sidebarOpen = !sidebarOpen"
                         class="lg:hidden text-dark/40 hover:text-dark transition">
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
