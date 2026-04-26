@@ -9,6 +9,7 @@ use App\Filament\Resources\Disputes\Schemas\DisputeForm;
 use App\Filament\Resources\Disputes\Tables\DisputesTable;
 use App\Models\Dispute;
 use BackedEnum;
+use UnitEnum;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
@@ -18,7 +19,11 @@ class DisputeResource extends Resource
 {
     protected static ?string $model = Dispute::class;
 
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedExclamationTriangle;
+    protected static string|UnitEnum|null $navigationGroup = 'App Management';
+    protected static ?string $navigationLabel = 'Disputes';
+    protected static ?int $navigationSort = 3;
+
 
     public static function form(Schema $schema): Schema
     {

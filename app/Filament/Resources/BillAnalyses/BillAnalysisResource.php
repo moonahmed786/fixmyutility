@@ -9,6 +9,7 @@ use App\Filament\Resources\BillAnalyses\Schemas\BillAnalysisForm;
 use App\Filament\Resources\BillAnalyses\Tables\BillAnalysesTable;
 use App\Models\BillAnalysis;
 use BackedEnum;
+use UnitEnum;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
@@ -18,7 +19,11 @@ class BillAnalysisResource extends Resource
 {
     protected static ?string $model = BillAnalysis::class;
 
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedDocumentMagnifyingGlass;
+    protected static string|UnitEnum|null $navigationGroup = 'App Management';
+    protected static ?string $navigationLabel = 'Bill Analyses';
+    protected static ?int $navigationSort = 2;
+
 
     public static function form(Schema $schema): Schema
     {

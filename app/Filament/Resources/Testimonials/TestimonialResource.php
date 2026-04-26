@@ -9,6 +9,7 @@ use App\Filament\Resources\Testimonials\Schemas\TestimonialForm;
 use App\Filament\Resources\Testimonials\Tables\TestimonialsTable;
 use App\Models\Testimonial;
 use BackedEnum;
+use UnitEnum;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
@@ -18,7 +19,11 @@ class TestimonialResource extends Resource
 {
     protected static ?string $model = Testimonial::class;
 
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedStar;
+    protected static string|UnitEnum|null $navigationGroup = 'CMS';
+    protected static ?string $navigationLabel = 'Testimonials';
+    protected static ?int $navigationSort = 6;
+
 
     public static function form(Schema $schema): Schema
     {

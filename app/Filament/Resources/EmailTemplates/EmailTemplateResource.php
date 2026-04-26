@@ -9,6 +9,7 @@ use App\Filament\Resources\EmailTemplates\Schemas\EmailTemplateForm;
 use App\Filament\Resources\EmailTemplates\Tables\EmailTemplatesTable;
 use App\Models\EmailTemplate;
 use BackedEnum;
+use UnitEnum;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
@@ -18,7 +19,11 @@ class EmailTemplateResource extends Resource
 {
     protected static ?string $model = EmailTemplate::class;
 
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedEnvelope;
+    protected static string|UnitEnum|null $navigationGroup = 'Settings';
+    protected static ?string $navigationLabel = 'Email Templates';
+    protected static ?int $navigationSort = 2;
+
 
     public static function form(Schema $schema): Schema
     {

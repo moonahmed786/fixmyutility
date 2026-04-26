@@ -15,9 +15,11 @@ class SettingsTable
         return $table
             ->columns([
                 TextColumn::make('key')
-                    ->searchable(),
+                    ->searchable()
+                    ->toggleable(),
                 TextColumn::make('group')
-                    ->searchable(),
+                    ->searchable()
+                    ->toggleable(),
                 TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()

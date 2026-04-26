@@ -9,6 +9,7 @@ use App\Filament\Resources\Menus\Schemas\MenuForm;
 use App\Filament\Resources\Menus\Tables\MenusTable;
 use App\Models\Menu;
 use BackedEnum;
+use UnitEnum;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
@@ -18,7 +19,11 @@ class MenuResource extends Resource
 {
     protected static ?string $model = Menu::class;
 
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedBars3;
+    protected static string|UnitEnum|null $navigationGroup = 'CMS';
+    protected static ?string $navigationLabel = 'Menus';
+    protected static ?int $navigationSort = 7;
+
 
     public static function form(Schema $schema): Schema
     {

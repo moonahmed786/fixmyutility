@@ -9,6 +9,7 @@ use App\Filament\Resources\UtilityProviders\Schemas\UtilityProviderForm;
 use App\Filament\Resources\UtilityProviders\Tables\UtilityProvidersTable;
 use App\Models\UtilityProvider;
 use BackedEnum;
+use UnitEnum;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
@@ -18,7 +19,11 @@ class UtilityProviderResource extends Resource
 {
     protected static ?string $model = UtilityProvider::class;
 
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedBuildingOffice;
+    protected static string|UnitEnum|null $navigationGroup = 'App Management';
+    protected static ?string $navigationLabel = 'Utility Providers';
+    protected static ?int $navigationSort = 4;
+
 
     public static function form(Schema $schema): Schema
     {

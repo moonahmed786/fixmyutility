@@ -5,6 +5,7 @@ namespace App\Filament\Resources\Inquiries;
 use App\Filament\Resources\Inquiries\Pages;
 use App\Models\Inquiry;
 use BackedEnum;
+use UnitEnum;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
 use Filament\Actions\DeleteAction;
@@ -24,8 +25,10 @@ class InquiryResource extends Resource
     protected static ?string $model = Inquiry::class;
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedChatBubbleLeftRight;
-
+    protected static string|UnitEnum|null $navigationGroup = 'Leads';
     protected static ?string $navigationLabel = 'Leads / Inquiries';
+    protected static ?int $navigationSort = 1;
+
 
     protected static ?string $pluralLabel = 'Inquiries';
 
@@ -74,14 +77,17 @@ class InquiryResource extends Resource
             ->columns([
                 Tables\Columns\TextColumn::make('name')
                     ->searchable()
-                    ->sortable(),
+                    ->sortable()
+                    ->toggleable(),
                 Tables\Columns\TextColumn::make('email')
-                    ->searchable(),
+                    ->searchable()
+                    ->toggleable(),
                 Tables\Columns\TextColumn::make('phone')
                     ->searchable()
                     ->toggleable(),
                 Tables\Columns\TextColumn::make('status')
                     ->badge()
+                    ->toggleable()
                     ->color(fn (string $state): string => match ($state) {
                         'new'         => 'danger',
                         'in_progress' => 'warning',

@@ -9,6 +9,7 @@ use App\Filament\Resources\PostCategories\Schemas\PostCategoryForm;
 use App\Filament\Resources\PostCategories\Tables\PostCategoriesTable;
 use App\Models\PostCategory;
 use BackedEnum;
+use UnitEnum;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
@@ -18,7 +19,11 @@ class PostCategoryResource extends Resource
 {
     protected static ?string $model = PostCategory::class;
 
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedTag;
+    protected static string|UnitEnum|null $navigationGroup = 'CMS';
+    protected static ?string $navigationLabel = 'Post Categories';
+    protected static ?int $navigationSort = 4;
+
 
     public static function form(Schema $schema): Schema
     {
