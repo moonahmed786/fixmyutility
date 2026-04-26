@@ -14,7 +14,16 @@ $login = function () {
     $this->validate();
     $this->form->authenticate();
     Session::regenerate();
-    $this->redirectIntended(default: route('dashboard', absolute: false), navigate: true);
+
+    $user = auth()->user();
+
+    if ($user->hasRole(['admin', 'editor'])) {
+        // Admins and editors go to the Filament admin panel (full page reload, not Livewire navigate)
+        $this->redirect('/admin', navigate: false);
+    } else {
+        // Customers go to their dashboard
+        $this->redirectIntended(default: route('dashboard', absolute: false), navigate: true);
+    }
 };
 
 ?>

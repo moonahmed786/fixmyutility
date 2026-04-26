@@ -23,19 +23,16 @@ Route::get('/services/{service:slug}',  [ServiceController::class, 'show'])->nam
 Route::get('/blog',                     [BlogController::class, 'index'])->name('blog.index');
 Route::get('/blog/{post:slug}',         [BlogController::class, 'show'])->name('blog.show');
 
-// ─── Authenticated Dashboard Routes ──────────────────────────────────────────
+// ─── Customer Dashboard (customers only — admins/editors are redirected to /admin) ──
+Route::middleware(['auth', 'verified', 'customer'])->group(function () {
+    Route::get('/dashboard',              Dashboard::class)->name('dashboard');
+    Route::get('/dashboard/bills',        Bills::class)->name('bills.index');
+    Route::get('/dashboard/bills/{bill}', BillDetail::class)->name('bills.show');
+    Route::get('/dashboard/disputes',     Disputes::class)->name('disputes.index');
+});
+
+// ─── Profile (all authenticated users) ───────────────────────────────────────
 Route::middleware(['auth', 'verified'])->group(function () {
-    // Overview
-    Route::get('/dashboard',                Dashboard::class)->name('dashboard');
-
-    // Bills
-    Route::get('/dashboard/bills',          Bills::class)->name('bills.index');
-    Route::get('/dashboard/bills/{bill}',   BillDetail::class)->name('bills.show');
-
-    // Disputes
-    Route::get('/dashboard/disputes',       Disputes::class)->name('disputes.index');
-
-    // Profile
     Route::view('/profile', 'profile')->name('profile');
 });
 
